@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Image Slider</title>
+
+<style>
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #222;
+    color: white;
+    text-align: center;
+}
+
+h1 {
+    margin-top: 20px;
+}
+
+/* SLIDER CONTAINER */
+.slider {
+    position: relative;
+    max-width: 800px;
+    margin: 40px auto;
+    overflow: hidden;
+    border-radius: 12px;
+}
+
+/* SLIDES */
+.slide {
+    display: none;
+}
+
+.slide img {
+    width: 100%;
+    height: 450px;
+    object-fit: cover;
+}
+
+/* CAPTION */
+.caption {
+    background: rgba(0,0,0,0.6);
+    padding: 10px;
+    font-size: 20px;
+}
+
+/* BUTTONS */
+.prev, .next {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 30px;
+    background: rgba(0,0,0,0.5);
+    border: none;
+    color: white;
+    padding: 10px 15px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.prev { left: 10px; }
+.next { right: 10px; }
+
+.prev:hover, .next:hover {
+    background: rgba(0,0,0,0.8);
+}
+
+/* DOTS */
+.dots {
+    margin-top: 15px;
+}
+
+.dot {
+    height: 15px;
+    width: 15px;
+    margin: 5px;
+    display: inline-block;
+    background: gray;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.active {
+    background: white;
+}
+</style>
+</head>
+
+<body>
+
+<h1>My Image Slider</h1>
+
+<div class="slider">
+
+    <div class="slide">
+        <img src="200.jpeg">
+        <div class="caption">Palace</div>
+    </div>
+
+    <div class="slide">
+        <img src="https://picsum.photos/id/1025/800/500">
+        <div class="caption">Cute Dog</div>
+    </div>
+
+    <div class="slide">
+        <img src="https://picsum.photos/id/1035/800/500">
+        <div class="caption">Beautiful River</div>
+    </div>
+
+    <div class="slide">
+        <img src="https://picsum.photos/id/1045/800/500">
+        <div class="caption">Forest Path</div>
+    </div>
+
+    <!-- BUTTONS -->
+    <button class="prev" onclick="changeSlide(-1)">❮</button>
+    <button class="next" onclick="changeSlide(1)">❯</button>
+
+</div>
+
+<!-- DOT INDICATORS -->
+<div class="dots">
+    <span class="dot" onclick="goToSlide(1)"></span>
+    <span class="dot" onclick="goToSlide(2)"></span>
+    <span class="dot" onclick="goToSlide(3)"></span>
+    <span class="dot" onclick="goToSlide(4)"></span>
+</div>
+
+<script>
+let slideIndex = 1;
+showSlide(slideIndex);
+
+function changeSlide(n) {
+    showSlide(slideIndex += n);
+}
+
+function goToSlide(n) {
+    showSlide(slideIndex = n);
+}
+
+function showSlide(n) {
+    let slides = document.getElementsByClassName("slide");
+    let dots = document.getElementsByClassName("dot");
+
+    if (n > slides.length) slideIndex = 1;
+    if (n < 1) slideIndex = slides.length;
+
+    for (let slide of slides)
+        slide.style.display = "none";
+
+    for (let dot of dots)
+        dot.classList.remove("active");
+
+    slides[slideIndex - 1].style.display = "block";
+    dots[slideIndex - 1].classList.add("active");
+}
+
+/* AUTO SLIDE */
+setInterval(() => {
+    changeSlide(1);
+}, 4000);
+</script>
+
+</body>
+</html>
